@@ -7,7 +7,7 @@
 # Hardware Design
 
 
-
+https://github.com/Liu-wenhao-1223/motifhand-hardware_system
 
 
 # Sensor Processing
