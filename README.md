@@ -55,33 +55,55 @@ This subproject covers:
                          Data Visualization
 ```
 
-## Reconstruction
-
-for the code of reconstruction, you can follow this repo: 
-https://github.com/louhz/robogs
 
 
+After running the software modules above, you will obtain all necessary modalities for learning.
+
+---
+
+## Post-Processing Pipeline
+
+To reconstruct geometry and align thermal information to the 3D scene, please follow the steps below.
+
+### 1. Install Reconstruction Tools
+
+**Structure-from-Motion (SfM)**  
+Use [InstantSfM](https://github.com/cre185/InstantSfM) for camera pose estimation and sparse/dense reconstruction.
+
+**Mesh Reconstruction**  
+After SfM, use [robogs](https://github.com/louhz/robogs) for mesh reconstruction and 3D Gaussian processing.
+
+### 2. Install Python Dependencies
+
+Make sure the required Python packages are installed:
+
+```bash
+pip install -r requirements.txt
+```
 
 
-## Code of thermal map reprojection and color assignment
+### Thermal Color Registration & Post-Processing
 
+Set your data and output paths (example):
+```bash
+DATA_ROOT=/path/to/sequence
+OUTPUT_ROOT=/path/to/output
+```
 
+Then run the thermal–color registration and post-processing script:
 
+```bash
+python your_script.py \
+  --points_ply ${DATA_ROOT}/shortcanpoints.ply \
+  --data_dir ${DATA_ROOT}/result \
+  --heatmap_dir ${DATA_ROOT}/output_images \
+  --heatmap_save_dir ${DATA_ROOT}/processed_thermal \
+  --input_colored_pcd ${DATA_ROOT}/colored_cloud_final_raw_K.ply \
+  --output_dir ${OUTPUT_ROOT} \
+  --output_name heat.ply
+```
 
-The Thermal map  will first need to be processed by SAM2 and sift alignment.
-
-Then utilize the heatmap reprojection code to assign and filter color to generate
-thermal point cloud. 
-https://github.com/louhz/robogs/blob/main/robogs/mesh_util/heatmap.py
-
-
-### Code for SAM2 reprojection and assignment 
-
-
-
-
-## Code for learn from human will be released soon 
-
+This will produce a recolored point cloud (e.g., heat.ply) with thermally informed coloring suitable for downstream learning.
 
 
 ## Citation
